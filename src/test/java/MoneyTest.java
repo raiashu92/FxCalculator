@@ -33,8 +33,8 @@ public class MoneyTest {
     public void testToStringSuccess() {
         Money hundredRinggit = Money.cash(100, "MYR");
         Money thousandJapaneseYen = Money.cash(1000, "JPY");
-        Assert.assertEquals("MYR 100.00", hundredRinggit.toString().trim());
-        Assert.assertEquals("JPY 1000", thousandJapaneseYen.toString().trim());
+        Assert.assertEquals("MYR 100.00", hundredRinggit.toString());
+        Assert.assertEquals("JPY 1000", thousandJapaneseYen.toString());
     }
 
     @Test
