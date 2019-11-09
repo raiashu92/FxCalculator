@@ -40,7 +40,7 @@ public class Money implements Comparable<Money> {
         return isCurrencySame;
     }
 
-    public Money cash (double value, String ccy) {
+    public static Money cash (double value, String ccy) {
         return new Money(value, ccy);
     }
 

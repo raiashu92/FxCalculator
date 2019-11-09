@@ -47,11 +47,9 @@ public class ExchangeRateProvider {
         Function<String, String> keyForRateMap = x -> {
             String baseCcy = x.split("=")[0].substring(0, 3);
             String termCcy = x.split("=")[0].substring(3, 6);
-            if ("USD".equals(baseCcy) || "EUR".equals(baseCcy)) {
-                if ("EUR".equals(baseCcy) && "USD".equals(termCcy))
-                    return baseCcy;
+            if ("USD".equals(baseCcy) || ("EUR".equals(baseCcy) && !"USD".equals(termCcy)))
                 return termCcy;
-            } else
+            else
                 return baseCcy;
         };
 
