@@ -28,9 +28,6 @@ public class ExchangeRateProvider {
         return availableCurrencies;
     }
 
-    /*
-    * "AUD","CAD","CNY","CZK","DKK","EUR","GBP","JPY","NOK","NZD","USD"
-    * */
     private ExchangeRateProvider() {
         this.availableCurrencies = new HashSet<>();
         ratesMap = loadRatesFromFile();
