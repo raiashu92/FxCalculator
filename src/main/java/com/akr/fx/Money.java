@@ -1,19 +1,26 @@
 package com.akr.fx;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Currency;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-//@ToDo: implement serializable, add fraction check on amount
+//@ToDo: implement serializable, add test functions to check money and other classes
 public class Money implements Comparable<Money> {
+    private static final Logger logger = Logger.getLogger("Money.class");
     private BigDecimal amount;
     private Currency currency;
 
     private Money(double value, String ccy) {
         Objects.requireNonNull(ccy, "Currency code has to be provided");
         this.currency = Currency.getInstance(ccy);
-        Objects.requireNonNull(value, "Cash amount has to be specified");
-        this.amount = new BigDecimal(value).setScale(this.currency.getDefaultFractionDigits());
+        if (value <= 0) {
+            logger.log(Level.SEVERE, "Cash amount has to be specified");
+            throw new RuntimeException("Money cannot be 0 or -ve");
+        }
+        this.amount = new BigDecimal(value).setScale(this.currency.getDefaultFractionDigits(), RoundingMode.HALF_EVEN);
     }
 
     @Override
@@ -40,8 +47,17 @@ public class Money implements Comparable<Money> {
         return isCurrencySame;
     }
 
+    @Override
+    public String toString() {
+        return currency.getCurrencyCode() + " " + amount;
+    }
+
     public static Money cash (double value, String ccy) {
         return new Money(value, ccy);
+    }
+
+    public Money convert (String targetCcy, double finalRate) {
+        return new Money((this.amount.doubleValue() * finalRate), targetCcy);
     }
 
 }

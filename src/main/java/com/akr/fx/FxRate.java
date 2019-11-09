@@ -1,4 +1,6 @@
-package com.akr.fx.service;
+package com.akr.fx;
+
+import com.akr.fx.service.CrossVia;
 
 public class FxRate {
     private String baseCurrency;

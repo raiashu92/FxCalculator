@@ -1,5 +1,7 @@
 package com.akr.fx.service;
 
+import com.akr.fx.FxRate;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,7 +12,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//@ToDo add a class/fn() to check data integrity in the file like xxxXXX currency format
+//@ToDo add a class/fn() to check data integrity in the file like xxxXXX currency format, zero rates
 public class ExchangeRateProvider {
     private static final Logger logger = Logger.getLogger("ExchangeRateProvider.class");
     private Map<String, FxRate> ratesMap;
@@ -44,6 +46,7 @@ public class ExchangeRateProvider {
     private Map loadRatesFromFile () {
         Map hm = null;
         logger.info("Loading current rates for supported currencies from data file: " + DATA_FILE);
+
         Function<String, String> keyForRateMap = x -> {
             String baseCcy = x.split("=")[0].substring(0, 3);
             String termCcy = x.split("=")[0].substring(3, 6);
