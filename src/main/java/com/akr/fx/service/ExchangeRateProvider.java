@@ -45,11 +45,14 @@ public class ExchangeRateProvider {
         Map hm = null;
         logger.info("Loading current rates for supported currencies from data file: " + DATA_FILE);
         Function<String, String> keyForRateMap = x -> {
-            String ccy = x.split("=")[0].substring(0, 3);
-            if ("USD".equals(ccy) || "EUR".equals(ccy)) {
-                return x.split("=")[0].substring(3, 6);
+            String baseCcy = x.split("=")[0].substring(0, 3);
+            String termCcy = x.split("=")[0].substring(3, 6);
+            if ("USD".equals(baseCcy) || "EUR".equals(baseCcy)) {
+                if ("EUR".equals(baseCcy) && "USD".equals(termCcy))
+                    return baseCcy;
+                return termCcy;
             } else
-                return ccy;
+                return baseCcy;
         };
 
         try (Stream<String> strStream = Files.lines(Paths.get(DATA_FILE))) {
