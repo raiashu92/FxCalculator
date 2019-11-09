@@ -32,6 +32,7 @@ public class ExchangeRateProvider {
         this.availableCurrencies = new HashSet<>();
         ratesMap = loadRatesFromFile();
         this.availableCurrencies.addAll(ratesMap.keySet());
+        this.availableCurrencies.add(CrossVia.DEFAULT_CROSS_CURRENCY);
     }
 
     public static ExchangeRateProvider getInstance() {

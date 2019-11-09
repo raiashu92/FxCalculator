@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//@ToDo: implement serializable, add test functions same currency,-ve money etc to check money and other classes
+//@ToDo: implement serializable
 public class Money implements Comparable<Money> {
     private static final Logger logger = Logger.getLogger("Money.class");
     private BigDecimal amount;

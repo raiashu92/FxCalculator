@@ -3,27 +3,35 @@ package com.akr.fx.service;
 import com.akr.fx.FxRate;
 import com.akr.fx.Money;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //@ToDo check currencies are viable for cross or not
 public class CrossVia {
+    private static final Logger logger = Logger.getLogger("CrossVia.class");
     public static final String DEFAULT_CROSS_CURRENCY = "USD";
 
     public Money cross (String ccy1, String ccy2, double amount) {
-        //ex AUD 100.00 in DKK
 
         Map<String, FxRate> map = ExchangeRateProvider.getInstance().getRatesMap();
-        Money curency1 = Money.cash(100, ccy1);
+        Set<String> availableCurrencies = ExchangeRateProvider.getInstance().getAvailableCurrencies();
+        if (!availableCurrencies.containsAll(Arrays.asList(ccy1, ccy2))) {
+            logger.log(Level.WARNING, "Unable to find rate for: " + ccy1 + "-" + ccy2);
+            throw new RuntimeException("Forex rate not available");
+        }
+
+        Money givenCurrency = Money.cash(100, ccy1);
 
         if (ccy1.equals(ccy2)) {
-            return curency1;
+            return givenCurrency;
         } else {
             double rate1 = (DEFAULT_CROSS_CURRENCY.equals(ccy1)) ? 1 : findRateFor(ccy1, map);
             double rate2 = (DEFAULT_CROSS_CURRENCY.equals(ccy2)) ? 1 : findRateFor(ccy2, map);
-            System.out.println("rate1 is: " + rate1);
-            System.out.println("rate2 is: " + rate2);
             double finalRate = (rate1 / rate2);
-            Money targetCurrency = curency1.convert(ccy2, finalRate);
+            Money targetCurrency = givenCurrency.convert(ccy2, finalRate);
             return targetCurrency;
         }
     }
