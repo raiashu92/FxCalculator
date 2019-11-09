@@ -57,6 +57,10 @@ public class Money implements Comparable<Money> {
     }
 
     public Money convert (String targetCcy, double finalRate) {
+        if (finalRate <= 0) {
+            logger.log(Level.SEVERE, "conversion rate found to be 0 or -ve, please check");
+            throw new RuntimeException("conversion error occurred");
+        }
         return new Money((this.amount.doubleValue() * finalRate), targetCcy);
     }
 
