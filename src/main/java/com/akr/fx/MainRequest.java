@@ -31,7 +31,9 @@ public class MainRequest {
                     Money targetMoney = CrossVia.cross(sourceMoney, data.get(1));
                     System.out.println(sourceMoney + " = " + targetMoney);
                 } else {
-                    System.out.println("Query not in supported format \n supported query format <ccy1> <amount1> in <ccy2>");
+                    System.out.println("Query not in supported format \n" +
+                            "- supported query format <ccy1> <amount1> in <ccy2> \n" +
+                            "- at max provide 2 decimal places");
                 }
             } else {
                 System.out.println("Exiting ...");
