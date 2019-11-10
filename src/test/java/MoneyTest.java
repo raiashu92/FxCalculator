@@ -50,6 +50,14 @@ public class MoneyTest {
     public void testWrongConversionRate() {
         wrongConversionException.expect(ForexException.class);
         wrongConversionException.expectMessage("conversion error occurred");
-        Money.cash(1, "USD").convert("INR", 0);
+        Money.cash(1, "USD").convertTo("INR", 0);
+    }
+
+    @Test
+    public void testEquals() {
+        Money oneDollar = Money.cash(1, "usd");
+        Money anotherDollar = Money.cash(1, "USD");
+        Assert.assertEquals(oneDollar, anotherDollar);
+        Assert.assertEquals(0, oneDollar.compareTo(anotherDollar));
     }
 }

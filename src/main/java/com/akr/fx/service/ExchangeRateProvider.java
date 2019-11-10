@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//@ToDo add a class/fn() to check data integrity in the file like xxxXXX currency format, zero rates
 public class ExchangeRateProvider {
     private static final Logger logger = Logger.getLogger("ExchangeRateProvider.class");
     private Map<String, FxRate> ratesMap;

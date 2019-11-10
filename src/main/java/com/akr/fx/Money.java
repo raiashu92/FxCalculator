@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//@ToDo: implement serializable
 public class Money implements Comparable<Money> {
     private static final Logger logger = Logger.getLogger("Money.class");
     private BigDecimal amount;
@@ -17,7 +16,7 @@ public class Money implements Comparable<Money> {
 
     private Money(double value, String ccy) {
         Objects.requireNonNull(ccy, "Currency code has to be provided");
-        this.currency = Currency.getInstance(ccy);
+        this.currency = Currency.getInstance(ccy.toUpperCase());
         if (value <= 0) {
             logger.log(Level.SEVERE, "Cash amount has to be specified");
             throw new ForexException("Money cannot be 0 or -ve");
@@ -58,7 +57,7 @@ public class Money implements Comparable<Money> {
         return new Money(value, ccy);
     }
 
-    public Money convert (String targetCcy, double finalRate) {
+    public Money convertTo(String targetCcy, double finalRate) {
         if (finalRate <= 0) {
             logger.log(Level.SEVERE, "conversion rate found to be 0 or -ve, please check");
             throw new ForexException("conversion error occurred");
@@ -66,4 +65,11 @@ public class Money implements Comparable<Money> {
         return new Money((this.amount.doubleValue() * finalRate), targetCcy);
     }
 
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public String getCurrency() {
+        return currency.getCurrencyCode();
+    }
 }
