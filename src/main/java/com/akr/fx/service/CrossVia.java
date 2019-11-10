@@ -1,5 +1,6 @@
 package com.akr.fx.service;
 
+import com.akr.fx.exception.ForexException;
 import com.akr.fx.FxRate;
 import com.akr.fx.Money;
 
@@ -20,7 +21,7 @@ public class CrossVia {
         Set<String> availableCurrencies = ExchangeRateProvider.getInstance().getAvailableCurrencies();
         if (!availableCurrencies.containsAll(Arrays.asList(ccy1, ccy2))) {
             logger.log(Level.WARNING, "Unable to find rate for: " + ccy1 + "-" + ccy2);
-            throw new RuntimeException("Forex rate not available");
+            throw new ForexException("Forex rate not available");
         }
 
         Money givenCurrency = Money.cash(100, ccy1);

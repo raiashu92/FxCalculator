@@ -1,5 +1,7 @@
 package com.akr.fx;
 
+import com.akr.fx.exception.ForexException;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
@@ -18,7 +20,7 @@ public class Money implements Comparable<Money> {
         this.currency = Currency.getInstance(ccy);
         if (value <= 0) {
             logger.log(Level.SEVERE, "Cash amount has to be specified");
-            throw new RuntimeException("Money cannot be 0 or -ve");
+            throw new ForexException("Money cannot be 0 or -ve");
         }
         this.amount = new BigDecimal(value).setScale(this.currency.getDefaultFractionDigits(), RoundingMode.HALF_EVEN);
     }
@@ -59,7 +61,7 @@ public class Money implements Comparable<Money> {
     public Money convert (String targetCcy, double finalRate) {
         if (finalRate <= 0) {
             logger.log(Level.SEVERE, "conversion rate found to be 0 or -ve, please check");
-            throw new RuntimeException("conversion error occurred");
+            throw new ForexException("conversion error occurred");
         }
         return new Money((this.amount.doubleValue() * finalRate), targetCcy);
     }

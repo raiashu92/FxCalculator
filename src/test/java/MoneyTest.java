@@ -1,4 +1,5 @@
 import com.akr.fx.Money;
+import com.akr.fx.exception.ForexException;
 import org.junit.Assert;
 import org.junit.ComparisonFailure;
 import org.junit.Rule;
@@ -39,7 +40,7 @@ public class MoneyTest {
 
     @Test
     public void testZeroAndNegativeMoney() {
-        zeroAndNegativeException.expect(RuntimeException.class);
+        zeroAndNegativeException.expect(ForexException.class);
         zeroAndNegativeException.expectMessage("Money cannot be 0 or -ve");
         Money zero = Money.cash(0, "AUD");
         Money negative = Money.cash(-1, "CAD");
@@ -47,7 +48,7 @@ public class MoneyTest {
 
     @Test
     public void testWrongConversionRate() {
-        wrongConversionException.expect(RuntimeException.class);
+        wrongConversionException.expect(ForexException.class);
         wrongConversionException.expectMessage("conversion error occurred");
         Money.cash(1, "USD").convert("INR", 0);
     }

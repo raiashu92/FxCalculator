@@ -1,4 +1,5 @@
 import com.akr.fx.Money;
+import com.akr.fx.exception.ForexException;
 import com.akr.fx.service.CrossVia;
 import com.akr.fx.service.ExchangeRateProvider;
 import org.junit.Assert;
@@ -36,7 +37,7 @@ public class FxCrossTest {
 
     @Test
     public void testCrossWithUnavailableCurrency() {
-        crossException.expect(RuntimeException.class);
+        crossException.expect(ForexException.class);
         crossException.expectMessage("Forex rate not available");
         Money target = crossVia.cross("INR", "SGP", 1000);
     }

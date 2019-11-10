@@ -1,5 +1,6 @@
 package com.akr.fx.service;
 
+import com.akr.fx.exception.ForexException;
 import com.akr.fx.FxRate;
 
 import java.io.IOException;
@@ -65,7 +66,7 @@ public class ExchangeRateProvider {
 
         if (Objects.isNull(hm) || hm.isEmpty()) {
             logger.log(Level.SEVERE, "No data or data not in proper format. Please enter in BaseCcyTermCcy=Rate format ex: AUDUSD=0.8371");
-            throw new RuntimeException("Error while reading from data file");
+            throw new ForexException("Error while reading from data file");
         }
 
         return hm;
